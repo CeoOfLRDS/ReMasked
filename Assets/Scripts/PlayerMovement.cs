@@ -1,15 +1,18 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float baseMoveSpeed = 5f;
 
+    private float currentMoveSpeed;
     private Rigidbody2D rb;
     private Vector2 movement;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        currentMoveSpeed = baseMoveSpeed;
     }
 
     void Update()
@@ -29,6 +32,16 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = movement * moveSpeed;
+        rb.velocity = movement * currentMoveSpeed;
+    }
+
+    public void SetMoveSpeedMultiplier(float multiplier)
+    {
+        currentMoveSpeed = baseMoveSpeed * multiplier;
+    }
+
+    public void ResetMoveSpeed()
+    {
+        currentMoveSpeed = baseMoveSpeed;
     }
 }
